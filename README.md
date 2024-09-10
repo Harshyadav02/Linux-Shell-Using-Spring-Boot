@@ -59,11 +59,12 @@ The project has the following important files and folders:
 Before running this project, you need to have:
 - **Java** (version 11 or newer)
 - **Maven** (a tool for building Java projects)
-
+- **Linux OS** 
+  
 If you don’t have them, you can install them:
 - **[Install Java](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)**
 - **[Install Maven](https://maven.apache.org/install.html)**
-- Linux OS
+
 
 ### How to Run the Project
 
