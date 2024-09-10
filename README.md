@@ -63,6 +63,7 @@ Before running this project, you need to have:
 If you don’t have them, you can install them:
 - **[Install Java](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)**
 - **[Install Maven](https://maven.apache.org/install.html)**
+- Linux OS
 
 ### How to Run the Project
 
