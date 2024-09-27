@@ -10,4 +10,4 @@ public class LinuxShellApplication {
 		SpringApplication.run(LinuxShellApplication.class, args);
 	}
 
-}
+}	
