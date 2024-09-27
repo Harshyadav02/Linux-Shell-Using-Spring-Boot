@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,10 +7,10 @@
     <style>
         body {
             background-color: black;
-            color: white;
+            color: rgb(16, 245, 96);
             font-family: monospace;
             font-size: 2em;
-            margin: 0; 
+            margin: 0;  
             padding: 0;
             
             /* color: #8ae234; */
@@ -42,14 +42,16 @@
             flex-grow: 1;
             font-size: 1em;
             outline: none;
+            caret-color: white; 
         }
     </style>
 </head>
 <body>
     <div id="terminal">
-        <div id="output"></div>
+        <div id="output" ></div>
+        
         <div id="input-line">
-            <span id="input-prompt">user@ubuntu:~$</span>
+            <span id="input-prompt" style="color: white;">user@ubuntu:~$</span>
             <input id="input" type="text" autofocus>
         </div>
         
@@ -96,6 +98,120 @@
             })
             .catch(error => {
                 outputElement.innerHTML += `<div>Error: ${error}</div>`;
+                outputElement.scrollTop = outputElement.scrollHeight;
+            });
+        }
+    </script>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Terminal</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: monospace;
+            font-size: 2em;
+            margin: 0;  
+            padding: 0;
+        }
+        #terminal {
+            width: 100%;
+            height: 100vh;
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        #output {
+            flex-grow: 1;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        #input-line {
+            display: flex;
+            align-items: center;
+        }
+        #input-prompt {
+            color: #ffcc00; /* Change this color for the prompt */
+        }
+        .output-line {
+            color: #eff2f4; /* Change this color for the output */
+        }
+        #input {
+            border: none;
+            background-color: black;
+            color: white;
+            flex-grow: 1;
+            font-size: 1em;
+            outline: none;
+            caret-color: white; 
+        }
+    </style>
+</head>
+<body>
+    <div id="terminal">
+        <div id="output"></div>
+        
+        <div id="input-line">
+            <span id="input-prompt">user@ubuntu:~$</span>
+            <input id="input" type="text" autofocus>
+        </div>
+    </div>
+
+    <script>
+        const inputElement = document.getElementById('input');
+        const outputElement = document.getElementById('output');
+        const promptElement = document.getElementById('input-prompt');
+
+        inputElement.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                const command = inputElement.value;
+                if (command.trim()) {
+                    addCommandToOutput(command);
+                    executeCommand(command);
+                }
+                inputElement.value = '';
+            }
+        });
+
+        function addCommandToOutput(command) {
+            if(command === "clear") {
+                location.reload();
+            } else {
+                // Create a new output line for the command
+                const commandLine = document.createElement('div');
+                commandLine.innerHTML = `<span style="color: #ffcc00;">${promptElement.textContent}</span> ${command}`;
+                outputElement.appendChild(commandLine);
+            }
+        }
+
+        function executeCommand(command) {
+            fetch('/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ command }),
+            })
+            .then(response => response.text())
+            .then(result => {
+                const resultLine = document.createElement('div');
+                resultLine.innerHTML = result;
+                outputElement.appendChild(resultLine);
+                outputElement.scrollTop = outputElement.scrollHeight;
+            })
+            .catch(error => {
+                const errorLine = document.createElement('div');
+                errorLine.innerHTML = `<span style="color: red">Error: ${error}</span>`;
+                outputElement.appendChild(errorLine);
                 outputElement.scrollTop = outputElement.scrollHeight;
             });
         }
