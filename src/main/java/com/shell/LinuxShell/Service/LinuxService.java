@@ -62,6 +62,8 @@ public class LinuxService {
             while ((line = reader.readLine()) != null) {
                 error.append(line).append("\n");
             }
+
+            
         }
 
         try {
@@ -72,10 +74,12 @@ public class LinuxService {
         }
 
         if (process.exitValue() != 0) {
-            return "Error:\n" + error.toString();
+            
+            return error.substring(15);
+            
         }
-        // System.out.println(output);
-        return output.toString();
+
+        return output.toString().trim();
     }
 
     private String changeDirectory(String newDir) {
