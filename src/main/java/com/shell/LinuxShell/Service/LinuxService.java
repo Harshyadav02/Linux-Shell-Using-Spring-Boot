@@ -52,7 +52,7 @@ public class LinuxService {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                output.append(line).append("\n");
+                output.append(line.trim()).append("\n");
             }
         }
 
@@ -60,7 +60,7 @@ public class LinuxService {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                error.append(line).append("\n");
+                error.append(line.trim()).append("\n");
             }
 
             
